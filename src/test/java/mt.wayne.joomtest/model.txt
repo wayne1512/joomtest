@@ -1,0 +1,47 @@
+States(joom):
+    home
+    catalogue
+    product
+    cart
+    checkout
+
+transition:
+    login
+    logout
+    search
+    chooseCategory
+    viewProduct
+    addToCart
+    clearCart
+    checkout
+
+variables:
+    boolean loggedIn
+    boolean itemsInCart
+
+model:
+    home -> login -> home (loggedIn = true)
+    home -> logout -> home (loggedIn = false)
+    catalogue -> login -> catalogue (loggedIn = true)
+    catalogue -> logout -> catalogue (loggedIn = false)
+    product -> login -> product (loggedIn = true)
+    product -> logout -> product (loggedIn = false)
+    cart -> login -> cart (loggedIn = true)
+    cart -> logout -> cart (loggedIn = false)
+
+    home -> search -> catalogue
+    home -> chooseCategory -> catalogue
+    catalogue -> viewProduct -> product
+    product -> addToCart -> product (itemsInCart = true)
+    home -> goToCart -> cart
+    catalogue -> goToCart -> cart
+    product -> goToCart -> cart
+    cart -> goToCart -> cart
+    cart -> clearCart -> cart (itemsInCart = false)
+    cart -> checkout -> checkout
+
+    catalogue -> goHome -> home
+    product -> goHome -> home
+    cart -> goHome -> home
+    home -> goHome -> home
+

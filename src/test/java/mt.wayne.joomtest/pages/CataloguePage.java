@@ -12,13 +12,10 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class CataloguePage {
-    WebDriver driver;
-    WebDriverWait wait;
+public class CataloguePage extends BasePage{
 
     public CataloguePage(WebDriver driver, WebDriverWait wait) {
-        this.driver = driver;
-        this.wait = wait;
+        super(driver, wait);
     }
 
     public void clickFirstProductAndSwitchTab(){
@@ -50,13 +47,15 @@ public class CataloguePage {
     }
 
     public void verifyProductCount(int count) {
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("div[class^='product___']")));
         List<WebElement> products = driver.findElements(By.cssSelector("div[class^='product___']"));
         assertTrue(products.size() >= count);
     }
 
     public void verifySearchQuery(String search) {
-        WebElement searchBox = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[placeholder='What are you looking for?']")));
+        WebElement searchBox = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("input[placeholder='What are you looking for?'], input[placeholder='Ho ho ho, merry searching']")));
         String text = searchBox.getAttribute("value");
         assertEquals(search, text);
     }
+
 }
